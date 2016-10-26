@@ -1,8 +1,10 @@
-from flask import Flask
-from flask import request
+from flask import Flask, request, make_response, render_template, session
 import data
+import datetime
 
 app = Flask(__name__)
+# set the secret key.  keep this really secret:
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 @app.route("/")
 def hello():
@@ -28,6 +30,30 @@ def processform():
 	return app.send_static_file('thankyou.html')
     else:
         error = 'Invalid username/password'
+
+@app.route('/login', methods=['POST', 'GET'])
+def showlogin():
+    error = None
+    if request.method == 'POST':
+	username = request.form['login']
+	password =request.form['pwd']
+	resp = setcookieandredirect(username)
+	return resp
+	return render_template('login.html', msg="Failed to login")
+    else:
+	if 'username' in session:
+		resp = make_response(render_template('admin.html'))
+		return resp
+	else:
+    		return render_template('login.html')
+
+def setcookieandredirect(user):
+    resp = make_response(render_template('admin.html'))
+    session['username'] = user
+    return resp
+
+def getfeedbackdata():
+    return "hello"
 
 if __name__ == "__main__":
     app.run()
