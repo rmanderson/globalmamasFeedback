@@ -1,6 +1,7 @@
-from flask import Flask, request, make_response, render_template, session
+from flask import Flask, request, make_response, render_template, session, redirect, url_for
 import data
 import datetime
+import exportdata
 
 app = Flask(__name__)
 # set the secret key.  keep this really secret:
@@ -47,13 +48,25 @@ def showlogin():
 	else:
     		return render_template('login.html')
 
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('username', None)
+    return redirect(url_for('login'))
+
 def setcookieandredirect(user):
     resp = make_response(render_template('admin.html'))
     session['username'] = user
     return resp
 
+@app.route('/downloadData')
 def getfeedbackdata():
-    return "hello"
+    conn = data.connect('globalmamasurvey.db')
+    rows = data.get_survey_data(conn.cursor())
+    csv = exportdata.exportToCSV(rows)
+    response = make_response(csv)
+    response.headers["Content-Disposition"] = "attachment; filename=books.csv"
+    return response
 
 if __name__ == "__main__":
     app.run()
