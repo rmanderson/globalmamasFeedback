@@ -1,10 +1,14 @@
 
 <html>
-<title>
-How was our Service?
-</title>
+<head>
+	<title>
+	How was our Service?
+	</title>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+</head>
 <body>
 <H2>How was my customer service today?</H2>
+<div id="main">
 <form action="/processform" method="post">
   <div id="verypoor">
         <input type="radio" name="rating" value="1" checked>Very Poor
@@ -31,7 +35,7 @@ First Name:<br>
   <textarea name='comment' id='comment' rows="10" cols="50"></textarea><br /><br>
 <input type="submit" value="Submit">
 </form>
-
+</div>
 
 </body>
 

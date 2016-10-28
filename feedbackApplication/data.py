@@ -45,6 +45,22 @@ def addSurveyData(cursor, surveyRow):
 		LastName=surveyRow[3], Email=surveyRow[4], Comment= surveyRow[5])
 	cursor.execute(query)
 
+def addAdmin(cursor, userID, password):
+	query = """INSERT INTO admin ("user_id","password") VALUES ('{user}','{pwd}')""".format(user=userID, pwd=password)
+	cursor.execute(query)
+
+def userExists(cursor, userID):
+	query = "select count(*) from admin where user_id = '{user}'".format(user=userID)
+	cursor.execute(query)
+	all_rows = cursor.fetchall()
+	return all_rows[0][0] > 0
+
+def loginValid(cursor, userID, password):
+	query = "select count(*) from admin where user_id = '{user}' and password = '{pwd}'".format(user=userID, pwd=password)
+        cursor.execute(query)
+        all_rows = cursor.fetchall()
+        return all_rows[0][0] > 0
+
 def populateData(cursor):
 	FirstNames = ('John','Bob','Tim','Mike','Eric','Sam','Ed','Mary','Liz','Nicole','Rebecca','Lisa','Alicia','Tiffany')
 	LastNames = ('Smith','Brown','Anderson','Clark','Black','Blake','Rice','Sanders','Clinton','Robinson','Kane','Trent')

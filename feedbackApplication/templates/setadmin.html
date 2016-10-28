@@ -1,0 +1,17 @@
+<html>
+        <head>
+                <title>Please Create a Login</title>
+        </head>
+        <body>
+                {% if msg %}
+                        <h1>{{ msg }}</h1>
+                {% endif %}
+                <form action="/adduser" method="post">
+                <div>Login: </div>
+                <div><input type="text" name="login" size=35/></div>
+                <div>Password: </div>
+                <div><input type="password" name="pwd" size=35/></div>
+                <input type="submit" value="Submit"/>
+                </form>
+        </body>
+</html>

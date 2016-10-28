@@ -1,11 +1,32 @@
 <html>
 	<head>
 		<title>Admin Page</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
 	</head>
 	<body>
 		<h1>This is the admin page</h1>
-		<div id='DownloadData'>Download Data</div>
-		<div id='ClearData'>Clear Data</div>
+		<div id='main'>
+		<div id='DownloadData'>
+			<form action="/downloadData" method="get">
+				<input type="submit" value="Download Data"/>
+			</form>
+		</div>
+		<div id='ClearData'>
+			<form action="/clearData" method="get">
+                                <input type="submit" value="Clear Data"/>
+                        </form>
+		</div>
+		<div id='ChangePW'>
+			<form action="/updatePassword" method="postt">
+                                <input type="submit" value="Update Password"/>
+                        </form>
+		</div>
+		<div id='Logout'>
+			<form action="/logout" method="post">
+                		<input type="submit" value="Logout"/>
+			</form>
+		</div>
+		</div>
 	</body>
 
 </html>
