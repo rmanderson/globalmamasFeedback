@@ -48,6 +48,14 @@ def addAdmin(cursor, userID, password):
 	query = """INSERT INTO admin ("user_id","password") VALUES ('{user}','{pwd}')""".format(user=userID, pwd=password)
 	cursor.execute(query)
 
+def updatePassword(cursor, userID, password):
+        query = "Update admin set password = ? where user_id = ?"
+        cursor.execute(query, (password,userID))
+
+def deleteSurveyData(cursor):
+	query = "Delete from surveyData"
+	cursor.execute(query)
+
 def userExists(cursor, userID):
 	query = "select count(*) from admin where user_id = '{user}'".format(user=userID)
 	cursor.execute(query)

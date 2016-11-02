@@ -4,7 +4,7 @@
 		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
 	</head>
 	<body>
-		<h1>This is the admin page</h1>
+		<h1>Admin Page</h1>
 		<div id='main'>
 		<div id='DownloadData'>
 			<form action="/downloadData" method="get">
@@ -17,7 +17,9 @@
                         </form>
 		</div>
 		<div id='ChangePW'>
-			<form action="/updatePassword" method="postt">
+			<form action="/updatePassword" method="post">
+				<div>Password: </div>
+                		<div><input type="password" name="pwd" size=35/></div>
                                 <input type="submit" value="Update Password"/>
                         </form>
 		</div>

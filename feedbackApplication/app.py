@@ -69,6 +69,19 @@ def adduser():
 		data.close_connection(conn)
 		return render_template('form.html')
 
+@app.route('/updatePassword', methods=['POST'])
+def changePassword():
+    if request.method == 'POST':
+        if 'username' in session:
+            username = session['username']
+	    password = request.form['pwd']
+            print username
+            print password
+    	    conn = data.connect('globalmamasurvey.db')
+    	    data.updatePassword(conn.cursor(),username,password)
+            data.close_connection(conn)
+    return redirect(url_for('showlogin'))
+
 @app.route('/logout', methods=['POST', 'GET'])
 def logout():
     # remove the username from the session if it's there
@@ -94,13 +107,21 @@ def loginverified(username, password):
     conn = data.connect('globalmamasurvey.db')
     return data.loginValid(conn.cursor(), username, password)
 
+@app.route('/clearData', methods=['POST', 'GET'])
+def clearSurveyData():
+    conn = data.connect('globalmamasurvey.db')
+    data.deleteSurveyData(conn.cursor())
+    data.close_connection(conn)
+    return redirect(url_for('showlogin'))
+
 @app.route('/downloadData', methods=['POST', 'GET'])
 def getfeedbackdata():
     conn = data.connect('globalmamasurvey.db')
     rows = data.get_survey_data(conn.cursor())
     csv = exportdata.exportToCSV(rows)
+    data.close_connection(conn)
     epoch_time = int(time.time())
-    outputfilename = str(epoch_time) + ".csv" 
+    outputfilename = str(epoch_time) + ".csv"
     response = make_response(csv)
     response.headers["Content-Disposition"] = "attachment; filename="+outputfilename
     return response

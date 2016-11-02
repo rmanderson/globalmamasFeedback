@@ -1,12 +1,7 @@
-#pagetitle {
-    margin: 100px;
-}
 
 #main {
     background-color: lightgrey;
     width: 500px;
     border: 25px solid green;
-    /*padding: 25px;
-    margin: 100px;
-*/	
+    padding: 25px;
 }
