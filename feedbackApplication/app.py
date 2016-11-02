@@ -66,7 +66,7 @@ def adduser():
 	else:
 		data.addAdmin(conn.cursor(), username, password)
 		data.close_connection(conn)
-		return app.send_static_file('form.html')
+		return render_template('form.html')
 
 @app.route('/logout', methods=['POST', 'GET'])
 def logout():
