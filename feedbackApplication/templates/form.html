@@ -5,25 +5,57 @@
 	How was our Service?
 	</title>
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+	<style>
+	#formresponse{padding-bottom: 10px;}
+		#verypoor {display: inline-block;
+    margin-left: 40px;}
+#poor {display: inline-block;
+    margin-left: 50px;}
+#ok {display: inline-block;
+    margin-left: 50px;}
+#good {display: inline-block;
+    margin-left: 20px;}
+#excellent {display: inline-block;
+    margin-left: 10px;}
+	</style>
+<script>
+	function selectform(felement) {
+    		document.getElementById(felement).checked = true;
+	}
+</script>
 </head>
 <body>
+<div id="pagetitle">
 <H2>How was my customer service today?</H2>
+</div>
 <div id="main">
 <form action="/processform" method="post">
-  <div id="verypoor">
-        <input type="radio" name="rating" value="1" checked>Very Poor
+  <div id="smileyMap">
+	<img src="{{ url_for('static',filename='smiley.png') }}" usemap="#smilemap">
+	<map name="smilemap">
+  		<area shape="rect" coords="0,0,105,120" onclick="selectform('e5')" alt="excellentsmiley">
+  		<area shape="rect" coords="105,0,205,120" onclick="selectform('g4')" alt="verygoodsmiley">
+		<area shape="rect" coords="205,0,305,120" onclick="selectform('o3')" alt="goodsmiley">
+		<area shape="rect" coords="305,0,405,120" onclick="selectform('p2')" alt="poorsmiley">
+		<area shape="rect" coords="405,0,505,120" onclick="selectform('v1')" alt="verypoorsmiley">
+	</map>
   </div>
-  <div id="poor">
-        <input type="radio" name="rating" value="2">Poor
-  </div>
-  <div id="ok">
-        <input type="radio" name="rating" value="3">OK
-  </div>
-  <div id="good">
-        <input type="radio" name="rating" value="4">Good
-  </div>
-  <div id="excellent">
-        <input type="radio" name="rating" value="5">Excellent!
+  <div id ="formresponse">
+  	<div id="excellent">
+        	<input type="radio" name="rating" value="5" id="e5" checked>Excellent!
+  	</div>
+  	<div id="good">
+        	<input type="radio" name="rating" value="4" id="g4">Good
+  	</div>
+  	<div id="ok">
+        	<input type="radio" name="rating" value="3" id="o3">OK
+ 	 </div>
+  	<div id="poor">
+        	<input type="radio" name="rating" value="2" id="p2">Poor
+  	</div>
+  	<div id="verypoor">
+        	<input type="radio" name="rating" value="1" id ="v1">Very Poor
+  	</div>
   </div>
 First Name:<br>
   <input type="text" name="firstname" size=35><br>

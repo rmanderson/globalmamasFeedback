@@ -40,10 +40,9 @@ def getaggRatings(cursor):
 	return all_rows[0]
 
 def addSurveyData(cursor, surveyRow):
-	query = """INSERT INTO surveyData (storeid,rating,FirstName,LastName,Email,Comment)  VALUES ({storeid},{rating},'{FirstName}',
-		'{LastName}','{Email}','{Comment}')""".format(storeid=surveyRow[0], rating=surveyRow[1], FirstName=surveyRow[2],
-		LastName=surveyRow[3], Email=surveyRow[4], Comment= surveyRow[5])
-	cursor.execute(query)
+	comments = surveyRow[5]
+	query = "INSERT INTO surveyData (storeid,rating,FirstName,LastName,Email,Comment)  VALUES (?,?,?,?,?,?)"
+	cursor.execute(query, (surveyRow[0], surveyRow[1], surveyRow[2], surveyRow[3], surveyRow[4],comments))
 
 def addAdmin(cursor, userID, password):
 	query = """INSERT INTO admin ("user_id","password") VALUES ('{user}','{pwd}')""".format(user=userID, pwd=password)
@@ -75,8 +74,6 @@ def populateData(cursor):
 if __name__ == '__main__':
 	conn, c = connect(sqlite_file)
 	get_survey_data(c)
-	#get_store_data(c)
-	#addSurveyData(data)
 	getTotalRatings(c)
 	getaggRatings(c)
 	close_connection(conn)

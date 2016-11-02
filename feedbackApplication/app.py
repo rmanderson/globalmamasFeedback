@@ -3,6 +3,7 @@ import data
 import datetime
 import exportdata
 import setup
+import time
 
 app = Flask(__name__)
 # set the secret key.  keep this really secret:
@@ -10,14 +11,14 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return feedback()
 
 @app.route("/feedback")
 def feedback():
     if isDatabaseReady():
     	return render_template('form.html')
     else:
-	return render_template('setadmin.html', msg="")
+	return render_template('setadmin.html', msg="Please Create an Admin Login")
 
 @app.route('/processform', methods=['POST'])
 def processform():
@@ -98,8 +99,10 @@ def getfeedbackdata():
     conn = data.connect('globalmamasurvey.db')
     rows = data.get_survey_data(conn.cursor())
     csv = exportdata.exportToCSV(rows)
+    epoch_time = int(time.time())
+    outputfilename = str(epoch_time) + ".csv" 
     response = make_response(csv)
-    response.headers["Content-Disposition"] = "attachment; filename=books.csv"
+    response.headers["Content-Disposition"] = "attachment; filename="+outputfilename
     return response
 
 if __name__ == "__main__":
