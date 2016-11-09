@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # Import your application as:
 # from app import application
 # Example:
